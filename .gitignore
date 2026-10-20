@@ -1,0 +1,6 @@
+# The showcase site is built by site/build.py and never committed.
+site/dist/
+
+# Python bytecode from running the build or the tests.
+__pycache__/
+*.pyc
