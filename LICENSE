@@ -1,0 +1,54 @@
+This repository uses two licences. Part 1 covers the words and pictures. Part 2 covers
+the build script.
+
+
+==============================================================================
+PART 1. ENTRIES AND CONCEPTS: CC BY 4.0
+==============================================================================
+
+Applies to everything in this repository except the files named in Part 2. That
+includes every showcase entry (the entry.md files and their media), every concept
+document under concepts/, the platform content under showcase/platform/, and the
+Markdown documents at the root (README.md, CONTRIBUTING.md, MEMBERS.md, SECURITY.md).
+
+Each contributor keeps the copyright in their own contribution and licenses it under
+the Creative Commons Attribution 4.0 International licence (CC BY 4.0).
+
+You may share and adapt this material for any purpose, if you give appropriate credit
+to the contributor named in the entry, concept or commit, provide a link to the licence,
+and indicate if you made changes.
+
+The full legal code is at:
+https://creativecommons.org/licenses/by/4.0/legalcode
+
+A plain-language summary is at:
+https://creativecommons.org/licenses/by/4.0/
+
+
+==============================================================================
+PART 2. THE BUILD SCRIPT: MIT
+==============================================================================
+
+Applies to site/build.py and site/test_build.py.
+
+MIT License
+
+Copyright (c) 2026 Nick Walker
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
