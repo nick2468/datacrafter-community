@@ -240,6 +240,13 @@ def load_platform(root):
 # ---------------------------------------------------------------- rendering
 
 
+# The DataCrafter mark, the same one www.datacrafter.net uses. The SVG is drawn inline;
+# the PNG (site/static/icon-512.png, copied into the build) is for browsers whose bookmarks
+# and home-screen icons only keep a file icon.
+ICON_SVG = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%2314161a'/%3E%3Ccircle cx='7' cy='7' r='2.1' fill='%23e0a230'/%3E%3Ccircle cx='7' cy='17' r='2.1' fill='%23f4f4f0'/%3E%3Ccircle cx='17.5' cy='12' r='2.1' fill='%23f4f4f0'/%3E%3Cpath d='M8.7 8 15.6 10.9M8.7 16 15.6 13.1' stroke='%23f4f4f0' stroke-width='1.3'/%3E%3C/svg%3E"
+ICON_PNG = "icon-512.png"
+
+
 def page(title, body, prefix=""):
     """Wrap a body in the site shell. prefix is the relative path back to the site root."""
     full_title = SITE_TITLE if title == SITE_TITLE else f"{title} | {SITE_TITLE}"
@@ -249,6 +256,9 @@ def page(title, body, prefix=""):
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{html.escape(full_title)}</title>
+<link rel="icon" href="{ICON_SVG}">
+<link rel="icon" type="image/png" sizes="512x512" href="{prefix}{ICON_PNG}">
+<link rel="apple-touch-icon" href="{prefix}{ICON_PNG}">
 <style>{STYLE}</style>
 </head>
 <body>
@@ -420,6 +430,9 @@ def build(root, out):
         if members_file.is_file() else ([], [])
 
     prepare_out(out)
+    static = Path(__file__).resolve().parent / "static"
+    if (static / ICON_PNG).is_file():
+        shutil.copy2(static / ICON_PNG, out / ICON_PNG)
     (out / "index.html").write_text(render_index(platform, entries), encoding="utf-8")
     (out / "members.html").write_text(render_members(headers, rows), encoding="utf-8")
     if platform["entry"]:

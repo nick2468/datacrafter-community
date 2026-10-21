@@ -82,6 +82,16 @@ class BuildTest(unittest.TestCase):
         self.assertTrue(path.is_file(), f"{path} was not written")
         return path.read_text(encoding="utf-8")
 
+    def test_every_page_carries_the_datacrafter_icon(self):
+        # Without these links a browser shows a generic icon for a bookmark of the site.
+        self.assertTrue((self.out / build.ICON_PNG).is_file(), "the PNG icon was not copied")
+        for parts, prefix in [(("index.html",), ""), (("members.html",), ""),
+                              (("entries", "001-zz-fixture-zebra.html"), "../")]:
+            page = self.read(*parts)
+            self.assertIn('<link rel="icon" href="data:image/svg+xml,', page)
+            self.assertIn(f'<link rel="icon" type="image/png" sizes="512x512" href="{prefix}icon-512.png">', page)
+            self.assertIn(f'<link rel="apple-touch-icon" href="{prefix}icon-512.png">', page)
+
     def test_index_lists_platform_then_entries(self):
         index = self.read("index.html")
         self.assertIn("The fixture platform paragraph.", index)
