@@ -283,7 +283,8 @@ def render_media(entry, base):
             tag = (f'<video controls preload="metadata" src="{src}" aria-label="{alt}">'
                    f'<a href="{src}">{alt}</a></video>')
         else:
-            tag = f'<img src="{src}" alt="{alt}" loading="lazy">'
+            # Linked to the full-size file, so a phone can open it to read the detail.
+            tag = f'<a href="{src}"><img src="{src}" alt="{alt}" loading="lazy"></a>'
         figures.append(f"<figure>{tag}<figcaption>{alt}</figcaption></figure>")
     if entry["missing"] or not entry["present"]:
         figures.append('<p class="todo">media to come</p>')
