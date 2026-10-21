@@ -14,7 +14,7 @@ media:
   - file: 03-data-model.png
     alt: The Sales with products data model in view. Each sale is joined to its product's name, category and price, 720 rows for September.
   - file: 04-schedule-next-runs.png
-    alt: The Schedule's next five runs. It runs the Workflow at 6 am on the first of each month, Brisbane time.
+    alt: The Schedule's next five runs. It runs the Workflow at 6 am on the first of each month, Queensland time.
   - file: 05-run-record.png
     alt: The log of one run started from the Scheduler. Each step starts and ends, and the Workflow finishes in SUCCESS.
   - file: 06-report.png
