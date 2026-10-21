@@ -25,6 +25,7 @@ from pathlib import Path
 
 SITE_TITLE = "The DataCrafter showcase"
 COMMUNITY_URL = "https://github.com/nick2468/datacrafter-community"
+HOME_URL = "https://www.datacrafter.net"
 MARKER = ".built-by-build-py"
 
 IMAGE_TYPES = {".png", ".jpg", ".jpeg"}
@@ -357,6 +358,7 @@ def page(title, body, prefix="", head=""):
     <li><a href="{prefix}index.html">Showcase</a></li>
     <li><a href="{prefix}members.html">Members</a></li>
     <li><a href="{COMMUNITY_URL}">Community</a></li>
+    <li><a href="{HOME_URL}">DataCrafter.net</a></li>
   </ul></nav>
 </div></header>
 <main class="wrap">
@@ -366,6 +368,7 @@ def page(title, body, prefix="", head=""):
   <p>Entries and concepts are CC BY 4.0, credited to the member who made them.
   DataCrafter is built by AI from specifications written by people and AI together.
   <a href="{COMMUNITY_URL}">Contribute words, not code.</a></p>
+  <p><a href="{HOME_URL}">Back to www.datacrafter.net</a></p>
 </div></footer>
 </body>
 </html>

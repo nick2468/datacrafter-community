@@ -137,6 +137,18 @@ class BuildTest(unittest.TestCase):
             self.assertIn(f'<link rel="icon" type="image/png" sizes="512x512" href="{prefix}icon-512.png">', page)
             self.assertIn(f'<link rel="apple-touch-icon" href="{prefix}icon-512.png">', page)
 
+    def test_every_page_links_back_to_datacrafter_net(self):
+        pages = sorted(self.out.rglob("*.html"))
+        self.assertEqual(len(pages), 2 + 4 + 1)  # index and members, four showcases, one redirect
+        for path in pages:
+            page = path.read_text(encoding="utf-8")
+            nav = page.split('<nav aria-label="Site">')[1].split("</nav>")[0]
+            footer = page.split("<footer>")[1].split("</footer>")[0]
+            for part in (nav, footer):
+                self.assertIn('<a href="https://www.datacrafter.net">', part, path.name)
+            # Our own site, so it opens in the same tab.
+            self.assertNotIn("target=", page, path.name)
+
     def test_index_leads_with_a_card_for_every_showcase(self):
         grid = section(self.read("index.html"), "showcases")
         links = card_links(grid)
