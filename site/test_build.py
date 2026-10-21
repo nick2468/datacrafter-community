@@ -7,6 +7,7 @@ Run from the repository root:
 Licensed MIT. See LICENSE, part 2.
 """
 
+import re
 import sys
 import tempfile
 import unittest
@@ -18,10 +19,12 @@ import build  # noqa: E402
 
 FIXTURE_ENTRY = """---
 title: Zebra fixture dashboard
+summary: A fixture summary for the zebra card.
 member: Test Fixture Person
 github: zz-fixture
 version: 9.9.9
 date: 2026-01-01
+moved_from: 001-zz-fixture-old-zebra
 media:
   - file: 01-screen.png
     alt: A fixture screenshot of a zebra-striped grid
@@ -38,7 +41,30 @@ github: zz-fixture
 version: 9.9.9
 date: 2026-01-02
 ---
-Nothing recorded yet.
+Nothing recorded yet. This second sentence stays off the card.
+"""
+
+FIXTURE_OTHER_ENTRY = """---
+title: Gadget fixture report
+member: Second Fixture Person
+github: zz-other
+version: 9.9.9
+date: 2026-01-03
+---
+A gadget fixture caption.
+"""
+
+FIXTURE_OFFICIAL_ENTRY = """---
+title: Fixture official tour
+summary: A fixture tour of the screens.
+author: DataCrafter
+version: 9.9.9
+date: 2026-01-04
+media:
+  - file: 01-home.png
+    alt: A fixture screenshot of the home screen
+---
+An official fixture caption.
 """
 
 FIXTURE_MEMBERS = """# Members
@@ -46,12 +72,28 @@ FIXTURE_MEMBERS = """# Members
 | Number | Name | GitHub | LinkedIn | Joined | First contribution |
 |---|---|---|---|---|---|
 | 001 | Test Fixture Person | [zz-fixture](https://github.com/zz-fixture) | | 2026-01-01 | founder |
+| 002 | Second Fixture Person | [zz-other](https://github.com/zz-other) | | 2026-01-02 | showcase entry |
+| 003 | Quiet Fixture Person | [zz-quiet](https://github.com/zz-quiet) | | 2026-01-03 | bug report |
 """
 
-FIXTURE_PLATFORM = """# Platform tour
+ZEBRA = "001-zz-fixture-zebra"
+EMPTY = "002-zz-fixture-empty"
+OTHER = "003-zz-other-gadget"
+OFFICIAL = "000-datacrafter-tour"
 
-The fixture platform paragraph.
-"""
+CARD = re.compile(r'<li class="card">(.*?)</li>', re.S)
+
+
+def section(page, heading_id):
+    """The HTML of the <section> labelled by heading_id."""
+    match = re.search(rf'<section aria-labelledby="{heading_id}">(.*?)</section>', page, re.S)
+    assert match, f"no section labelled {heading_id}"
+    return match.group(1)
+
+
+def card_links(fragment):
+    """The (href, title) of each card's link, in order."""
+    return re.findall(r'<a class="card-link" href="([^"]+)">([^<]+)</a>', fragment)
 
 
 class BuildTest(unittest.TestCase):
@@ -60,22 +102,24 @@ class BuildTest(unittest.TestCase):
         self._tmp = tempfile.TemporaryDirectory()
         self.root = Path(self._tmp.name) / "repo"
         self.out = Path(self._tmp.name) / "dist"
-        entry = self.root / "showcase" / "entries" / "001-zz-fixture-zebra"
-        entry.mkdir(parents=True)
-        (entry / "entry.md").write_text(FIXTURE_ENTRY, encoding="utf-8")
-        (entry / "01-screen.png").write_bytes(b"\x89PNG\r\n\x1a\n fixture")
-        (entry / "02-clip.mp4").write_bytes(b"fixture mp4")
-        empty = self.root / "showcase" / "entries" / "002-zz-fixture-empty"
-        empty.mkdir(parents=True)
-        (empty / "entry.md").write_text(FIXTURE_EMPTY_ENTRY, encoding="utf-8")
-        platform = self.root / "showcase" / "platform"
-        platform.mkdir(parents=True)
-        (platform / "README.md").write_text(FIXTURE_PLATFORM, encoding="utf-8")
+        self.add_entry(ZEBRA, FIXTURE_ENTRY, {"01-screen.png": b"\x89PNG\r\n\x1a\n fixture",
+                                              "02-clip.mp4": b"fixture mp4"})
+        self.add_entry(EMPTY, FIXTURE_EMPTY_ENTRY)
+        self.add_entry(OTHER, FIXTURE_OTHER_ENTRY)
+        self.add_entry(OFFICIAL, FIXTURE_OFFICIAL_ENTRY, {"01-home.png": b"\x89PNG\r\n\x1a\n home"})
         (self.root / "MEMBERS.md").write_text(FIXTURE_MEMBERS, encoding="utf-8")
         self.summary = build.build(self.root, self.out)
 
     def tearDown(self):
         self._tmp.cleanup()
+
+    def add_entry(self, slug, text, files=None):
+        folder = self.root / "showcase" / "entries" / slug
+        folder.mkdir(parents=True, exist_ok=True)
+        (folder / "entry.md").write_text(text, encoding="utf-8")
+        for name, data in (files or {}).items():
+            (folder / name).write_bytes(data)
+        return folder
 
     def read(self, *parts):
         path = self.out.joinpath(*parts)
@@ -86,53 +130,165 @@ class BuildTest(unittest.TestCase):
         # Without these links a browser shows a generic icon for a bookmark of the site.
         self.assertTrue((self.out / build.ICON_PNG).is_file(), "the PNG icon was not copied")
         for parts, prefix in [(("index.html",), ""), (("members.html",), ""),
-                              (("entries", "001-zz-fixture-zebra.html"), "../")]:
+                              (("entries", f"{ZEBRA}.html"), "../"),
+                              (("entries", "001-zz-fixture-old-zebra.html"), "../")]:
             page = self.read(*parts)
             self.assertIn('<link rel="icon" href="data:image/svg+xml,', page)
             self.assertIn(f'<link rel="icon" type="image/png" sizes="512x512" href="{prefix}icon-512.png">', page)
             self.assertIn(f'<link rel="apple-touch-icon" href="{prefix}icon-512.png">', page)
 
-    def test_index_lists_platform_then_entries(self):
+    def test_index_leads_with_a_card_for_every_showcase(self):
+        grid = section(self.read("index.html"), "showcases")
+        links = card_links(grid)
+        self.assertEqual(links, [
+            (f"entries/{OFFICIAL}.html", "Fixture official tour"),
+            (f"entries/{ZEBRA}.html", "Zebra fixture dashboard"),
+            (f"entries/{EMPTY}.html", "Fixture with no media"),
+            (f"entries/{OTHER}.html", "Gadget fixture report"),
+        ])
+
+    def test_each_card_is_one_link_named_by_its_title(self):
         index = self.read("index.html")
-        self.assertIn("The fixture platform paragraph.", index)
-        self.assertIn("Zebra fixture dashboard", index)
-        self.assertIn("Fixture with no media", index)
-        self.assertLess(index.index("fixture platform"), index.index("Zebra fixture dashboard"))
-        self.assertIn('alt="A fixture screenshot of a zebra-striped grid"', index)
+        cards = CARD.findall(index)
+        self.assertEqual(len(cards), 4 + 3)  # the top grid, then the member groups
+        for card in cards:
+            # One link, and its only text is the title, so the title is its accessible name.
+            self.assertEqual(card.count("<a "), 1, card)
+            self.assertEqual(len(card_links(card)), 1, card)
+            self.assertIn('<p class="byline">By ', card)
+
+    def test_card_shows_cover_summary_and_author(self):
+        grid = section(self.read("index.html"), "showcases")
+        zebra = next(c for c in CARD.findall(grid) if ZEBRA in c)
+        self.assertIn(f'<img class="cover" src="entries/{ZEBRA}/01-screen.png" alt=""', zebra)
+        self.assertIn("A fixture summary for the zebra card.", zebra)
+        self.assertIn("By Test Fixture Person", zebra)
+
+    def test_card_without_summary_uses_the_first_sentence(self):
+        grid = section(self.read("index.html"), "showcases")
+        empty = next(c for c in CARD.findall(grid) if EMPTY in c)
+        self.assertIn('<p class="summary">Nothing recorded yet.</p>', empty)
+        self.assertNotIn("second sentence", empty)
+        self.assertIn("media to come", empty)
+
+    def test_index_shows_no_screenshots_inline(self):
+        index = self.read("index.html")
+        self.assertNotIn("<figure", index)
+        self.assertNotIn("<video", index)
+        self.assertNotIn("A fixture screenshot of a zebra-striped grid", index)
+
+    def test_one_page_per_showcase(self):
+        for slug, title in [(OFFICIAL, "Fixture official tour"), (ZEBRA, "Zebra fixture dashboard"),
+                            (EMPTY, "Fixture with no media"), (OTHER, "Gadget fixture report")]:
+            page = self.read("entries", f"{slug}.html")
+            self.assertIn(f"<h1>{title}</h1>", page)
+            self.assertIn('<a href="../index.html">Back to the showcase</a>', page)
+        self.assertEqual(self.summary["entries"], 4)
+
+    def test_members_section_groups_cards_by_member_in_ledger_order(self):
+        members = section(self.read("index.html"), "by-member")
+        groups = re.findall(r'<div class="member">\s*<h3>([^<]+)</h3>(.*?)</ul>\s*</div>',
+                            members, re.S)
+        self.assertEqual([name for name, _ in groups],
+                         ["Test Fixture Person", "Second Fixture Person"])
+        self.assertEqual(card_links(groups[0][1]), [
+            (f"entries/{ZEBRA}.html", "Zebra fixture dashboard"),
+            (f"entries/{EMPTY}.html", "Fixture with no media"),
+        ])
+        self.assertEqual(card_links(groups[1][1]), [(f"entries/{OTHER}.html", "Gadget fixture report")])
+        self.assertIn('Data Crafter 001 | <a href="https://github.com/zz-fixture">@zz-fixture</a>',
+                      groups[0][1])
+        # A member with no showcase has no group.
+        self.assertNotIn("Quiet Fixture Person", members)
+        # Card titles sit one level below the member's name.
+        self.assertIn(f'<h4><a class="card-link" href="entries/{OTHER}.html">', members)
+
+    def test_official_showcase_is_in_the_top_grid_only(self):
+        index = self.read("index.html")
+        self.assertIn(f"entries/{OFFICIAL}.html", section(index, "showcases"))
+        self.assertNotIn(OFFICIAL, section(index, "by-member"))
+        self.assertNotIn("DataCrafter Software Labs", section(index, "by-member"))
+        self.assertIn("By DataCrafter Software Labs", section(index, "showcases"))
+        self.assertEqual(self.summary["official"], 1)
+
+    def test_official_showcase_page_credits_datacrafter(self):
+        page = self.read("entries", f"{OFFICIAL}.html")
+        self.assertIn('<p class="eyebrow">Official showcase</p>', page)
+        self.assertIn('<p class="meta">DataCrafter Software Labs | DataCrafter 9.9.9', page)
+        self.assertNotIn("github.com/", page.split("<main")[1].split("</main>")[0])
+        member_page = self.read("entries", f"{ZEBRA}.html")
+        self.assertIn('<p class="eyebrow">Member showcase</p>', member_page)
+
+    def test_official_showcase_leads_the_grid_whatever_its_number(self):
+        (self.root / "showcase" / "entries" / OFFICIAL).rename(
+            self.root / "showcase" / "entries" / "009-datacrafter-tour")
+        build.build(self.root, self.out)
+        links = card_links(section(self.read("index.html"), "showcases"))
+        self.assertEqual(links[0], ("entries/009-datacrafter-tour.html", "Fixture official tour"))
+
+    def test_old_address_redirects_to_the_new_page(self):
+        page = self.read("entries", "001-zz-fixture-old-zebra.html")
+        self.assertIn(f'<meta http-equiv="refresh" content="0; url={ZEBRA}.html">', page)
+        self.assertIn(f'<link rel="canonical" href="{ZEBRA}.html">', page)
+        self.assertIn(f'<a href="{ZEBRA}.html">', page)
+        self.assertEqual(self.summary["redirects"], 1)
+
+    def test_moved_from_a_live_folder_fails_the_build(self):
+        clash = FIXTURE_OTHER_ENTRY.replace("date: 2026-01-03\n",
+                                            f"date: 2026-01-03\nmoved_from: {EMPTY}\n")
+        self.add_entry(OTHER, clash)
+        with self.assertRaises(build.BuildError):
+            build.build(self.root, self.out)
+
+    def test_moved_from_claimed_twice_fails_the_build(self):
+        twice = FIXTURE_OTHER_ENTRY.replace("date: 2026-01-03\n",
+                                            "date: 2026-01-03\nmoved_from: 001-zz-fixture-old-zebra\n")
+        self.add_entry(OTHER, twice)
+        with self.assertRaises(build.BuildError):
+            build.build(self.root, self.out)
+
+    def test_showcase_whose_member_is_not_in_the_ledger_still_gets_a_group(self):
+        stray = FIXTURE_OTHER_ENTRY.replace("Second Fixture Person", "Stray Fixture Person") \
+                                   .replace("zz-other", "zz-stray")
+        self.add_entry("004-zz-stray-thing", stray)
+        build.build(self.root, self.out)
+        members = section(self.read("index.html"), "by-member")
+        self.assertIn("<h3>Stray Fixture Person</h3>", members)
+        self.assertLess(members.index("Second Fixture Person"), members.index("Stray Fixture Person"))
 
     def test_entry_page_has_title_media_and_alt_text(self):
-        page = self.read("entries", "001-zz-fixture-zebra.html")
+        page = self.read("entries", f"{ZEBRA}.html")
         self.assertIn("<h1>Zebra fixture dashboard</h1>", page)
         self.assertIn("A fixture caption that the test looks for.", page)
-        self.assertIn('<img src="001-zz-fixture-zebra/01-screen.png" '
+        self.assertIn(f'<img src="{ZEBRA}/01-screen.png" '
                       'alt="A fixture screenshot of a zebra-striped grid"', page)
         self.assertIn('<video controls', page)
         self.assertIn('aria-label="A fixture clip of a grid sorting itself"', page)
         self.assertNotIn("media to come", page)
-        self.assertTrue((self.out / "entries" / "001-zz-fixture-zebra" / "01-screen.png").is_file())
-        self.assertTrue((self.out / "entries" / "001-zz-fixture-zebra" / "02-clip.mp4").is_file())
+        self.assertTrue((self.out / "entries" / ZEBRA / "01-screen.png").is_file())
+        self.assertTrue((self.out / "entries" / ZEBRA / "02-clip.mp4").is_file())
 
     def test_entry_without_media_says_media_to_come(self):
-        page = self.read("entries", "002-zz-fixture-empty.html")
+        page = self.read("entries", f"{EMPTY}.html")
         self.assertIn("<h1>Fixture with no media</h1>", page)
         self.assertIn("Nothing recorded yet.", page)
         self.assertIn("media to come", page)
 
     def test_listed_but_missing_media_says_media_to_come(self):
-        (self.root / "showcase" / "entries" / "001-zz-fixture-zebra" / "02-clip.mp4").unlink()
+        (self.root / "showcase" / "entries" / ZEBRA / "02-clip.mp4").unlink()
         summary = build.build(self.root, self.out)
-        page = self.read("entries", "001-zz-fixture-zebra.html")
+        page = self.read("entries", f"{ZEBRA}.html")
         self.assertIn("media to come", page)
         self.assertNotIn("<video", page)
         self.assertEqual(summary["to_come"], 1)
 
-    def test_members_page_has_one_row(self):
+    def test_members_page_has_the_ledger(self):
         page = self.read("members.html")
         self.assertIn("Test Fixture Person", page)
         self.assertIn('<a href="https://github.com/zz-fixture">zz-fixture</a>', page)
-        self.assertEqual(page.count("<tr>"), 2)  # header row plus one member
-        self.assertIn("1 member so far", page)
-        self.assertEqual(self.summary["members"], 1)
+        self.assertEqual(page.count("<tr>"), 4)  # header row plus three members
+        self.assertIn("3 members so far", page)
+        self.assertEqual(self.summary["members"], 3)
 
     def test_media_without_alt_text_fails_the_build(self):
         bad = FIXTURE_ENTRY.replace("    alt: A fixture clip of a grid sorting itself\n", "")
@@ -144,6 +300,27 @@ class BuildTest(unittest.TestCase):
         with self.assertRaises(build.BuildError):
             build.parse_entry(bad, "fixture")
 
+    def test_author_must_be_datacrafter(self):
+        bad = FIXTURE_OFFICIAL_ENTRY.replace("author: DataCrafter", "author: Someone Else")
+        with self.assertRaises(build.BuildError):
+            build.parse_entry(bad, "fixture")
+
+    def test_official_showcase_cannot_also_name_a_member(self):
+        bad = FIXTURE_OFFICIAL_ENTRY.replace("author: DataCrafter\n",
+                                             "author: DataCrafter\ngithub: zz-fixture\n")
+        with self.assertRaises(build.BuildError):
+            build.parse_entry(bad, "fixture")
+
+    def test_member_entry_needs_member_and_github(self):
+        for line in ("member: Test Fixture Person\n", "github: zz-fixture\n"):
+            with self.assertRaises(build.BuildError):
+                build.parse_entry(FIXTURE_EMPTY_ENTRY.replace(line, ""), "fixture")
+
+    def test_folder_name_with_a_space_fails_the_build(self):
+        self.add_entry("005 zz fixture spaced", FIXTURE_OTHER_ENTRY)
+        with self.assertRaises(build.BuildError):
+            build.build(self.root, self.out)
+
     def test_refuses_to_clear_a_folder_it_did_not_make(self):
         other = Path(self._tmp.name) / "not-ours"
         other.mkdir()
@@ -154,12 +331,11 @@ class BuildTest(unittest.TestCase):
 
     def test_text_is_escaped(self):
         tricky = FIXTURE_EMPTY_ENTRY.replace("Nothing recorded yet.", "<script>x</script>")
-        (self.root / "showcase" / "entries" / "002-zz-fixture-empty" / "entry.md").write_text(
-            tricky, encoding="utf-8")
+        self.add_entry(EMPTY, tricky)
         build.build(self.root, self.out)
-        page = self.read("entries", "002-zz-fixture-empty.html")
-        self.assertNotIn("<script>", page)
-        self.assertIn("&lt;script&gt;", page)
+        for page in (self.read("entries", f"{EMPTY}.html"), self.read("index.html")):
+            self.assertNotIn("<script>", page)
+            self.assertIn("&lt;script&gt;", page)
 
 
 class RepositoryBuildTest(unittest.TestCase):
@@ -168,9 +344,18 @@ class RepositoryBuildTest(unittest.TestCase):
     def test_repository_builds(self):
         root = Path(__file__).resolve().parent.parent
         with tempfile.TemporaryDirectory() as tmp:
-            summary = build.build(root, Path(tmp) / "dist")
+            out = Path(tmp) / "dist"
+            summary = build.build(root, out)
             self.assertGreaterEqual(summary["entries"], 1)
             self.assertGreaterEqual(summary["members"], 1)
+            index = (out / "index.html").read_text(encoding="utf-8")
+            bakery = "entries/001-nick2468-harbour-street-bakery.html"
+            self.assertIn((bakery, "Harbour Street Bakery"), card_links(section(index, "showcases")))
+            self.assertIn((bakery, "Harbour Street Bakery"), card_links(section(index, "by-member")))
+            # Entry 001's first address still answers, and sends the browser on.
+            old = (out / "entries" / "001-nick2468-month-end-on-a-schedule.html").read_text(
+                encoding="utf-8")
+            self.assertIn('url=001-nick2468-harbour-street-bakery.html', old)
 
 
 if __name__ == "__main__":

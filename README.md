@@ -61,8 +61,8 @@ LICENSE                         CC BY 4.0 for entries and concepts; MIT for site
 .github/ISSUE_TEMPLATE/         bug report and enhancement idea templates
 .github/PULL_REQUEST_TEMPLATE.md
 concepts/                       concept documents, one .md each
-showcase/platform/              the founder's tour of the platform
-showcase/entries/               member entries, one folder each
+showcase/README.md              how the site shows showcases; the front matter fields
+showcase/entries/               every showcase, one folder each, member or official
 site/build.py                   builds the showcase site from showcase/ and MEMBERS.md
 site/test_build.py              a unit test for the build script
 ```

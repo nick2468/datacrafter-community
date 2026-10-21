@@ -1,9 +1,11 @@
 ---
-title: One month-end, start to finish
+title: Harbour Street Bakery
+summary: One month-end close, start to finish, run by the Scheduler.
 member: Nick Walker
 github: nick2468
 version: 0.89.1
 date: 2026-10-21
+moved_from: 001-nick2468-month-end-on-a-schedule
 media:
   - file: 00-workspace.png
     alt: "The whole workspace: the Modules tree lists the bakery's objects by type, and the Month-end close Workflow is open on its canvas."
@@ -23,4 +25,8 @@ media:
 Harbour Street Bakery is a made-up business with two shops. Its September close runs end
 to end in DataCrafter: two data sources, a data model that joins them, an aggregation, a
 report, and a Workflow that runs the aggregation and then the report. The Scheduler runs
-the Workflow at 6 am on the first of each month. Every name in these pictures is made up.
+the Workflow at 6 am on the first of each month, so the pack is waiting when the team
+arrives.
+
+The run log shows each step as it starts and finishes, so a failed step is easy to find.
+Every name in these pictures is made up.

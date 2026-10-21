@@ -69,6 +69,7 @@ promise to consider the concept, not a promise to build it.**
    ```
    ---
    title: Month-end pack on a schedule
+   summary: One line for the card on the showcase index.
    member: Your name as you want it shown
    github: yourhandle
    version: 0.88.0
@@ -85,8 +86,14 @@ promise to consider the concept, not a promise to build it.**
 4. Open a pull request. One pull request is one entry.
 5. Tick every box in the pull request template.
 
+The `summary` is optional. Without it, the card shows your caption's first sentence.
+The first image in `media` is the card's cover.
+
 The `version` and the media are your proof of use. The founder checks the rules and
-merges. The merge publishes the entry on the showcase.
+merges. The merge publishes the entry on the showcase: a card on the index, repeated
+under your name in the members section, and a page of its own.
+[showcase/README.md](showcase/README.md) has every front matter field, and how official
+DataCrafter showcases differ.
 
 ## Content rules for screenshots and clips
 
