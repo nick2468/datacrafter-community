@@ -1,10 +1,10 @@
 # Platform tour
 
 A tour of the DataCrafter platform by the founder: screenshots and silent captioned clips,
-recorded against the Demo instance.
+recorded against the Demo instance or a scratch fixture with made-up names.
 
 This folder holds that tour. The showcase site shows it at the top of its index page,
-above the member entries. Nothing is here yet. The clips come later.
+above the member entries. The screenshots are here. The clips come later.
 
 ## How the build reads this folder
 
