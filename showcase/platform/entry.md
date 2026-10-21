@@ -5,6 +5,8 @@ github: nick2468
 version: 0.89.1
 date: 2026-10-21
 media:
+  - file: 00-workspace.png
+    alt: "The whole workspace: the Modules tree lists the bakery's objects by type, and the Month-end close Workflow is open on its canvas."
   - file: 01-workspace.png
     alt: The workspace. The Modules tree lists the bakery's objects by type, and the aggregation's result shows September sales by shop and category.
   - file: 02-workflow.png
