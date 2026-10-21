@@ -24,8 +24,7 @@ import sys
 from pathlib import Path
 
 SITE_TITLE = "The DataCrafter showcase"
-COMMUNITY_URL = "https://github.com/nick2468/datacrafter-community"
-# The header sends newcomers to our own Community page first, which explains GitHub.
+# The header and footer send newcomers to our own Community page first, which explains GitHub.
 COMMUNITY_PAGE_URL = "https://www.datacrafter.net/community"
 HOME_URL = "https://www.datacrafter.net"
 MARKER = ".built-by-build-py"
@@ -369,7 +368,7 @@ def page(title, body, prefix="", head=""):
 <footer><div class="wrap">
   <p>Entries and concepts are CC BY 4.0, credited to the member who made them.
   DataCrafter is built by AI from specifications written by people and AI together.
-  <a href="{COMMUNITY_URL}">Contribute words, not code.</a></p>
+  <a href="{COMMUNITY_PAGE_URL}">Contribute words, not code.</a></p>
   <p><a href="{HOME_URL}">Back to www.datacrafter.net</a></p>
 </div></footer>
 </body>

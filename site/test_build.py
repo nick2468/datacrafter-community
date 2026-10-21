@@ -149,12 +149,15 @@ class BuildTest(unittest.TestCase):
             # Our own site, so it opens in the same tab.
             self.assertNotIn("target=", page, path.name)
 
-    def test_header_community_link_goes_to_our_community_page(self):
+    def test_header_and_footer_community_links_go_to_our_community_page(self):
         for path in sorted(self.out.rglob("*.html")):
             page = path.read_text(encoding="utf-8")
             nav = page.split('<nav aria-label="Site">')[1].split("</nav>")[0]
             self.assertIn('<a href="https://www.datacrafter.net/community">Community</a>', nav, path.name)
             self.assertNotIn("github.com", nav, path.name)
+            footer = page.split("<footer>")[1].split("</footer>")[0]
+            self.assertIn('<a href="https://www.datacrafter.net/community">Contribute words, not code.</a>', footer, path.name)
+            self.assertNotIn("github.com", footer, path.name)
 
     def test_index_leads_with_a_card_for_every_showcase(self):
         grid = section(self.read("index.html"), "showcases")
