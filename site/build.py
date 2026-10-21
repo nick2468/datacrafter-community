@@ -25,6 +25,8 @@ from pathlib import Path
 
 SITE_TITLE = "The DataCrafter showcase"
 COMMUNITY_URL = "https://github.com/nick2468/datacrafter-community"
+# The header sends newcomers to our own Community page first, which explains GitHub.
+COMMUNITY_PAGE_URL = "https://www.datacrafter.net/community"
 HOME_URL = "https://www.datacrafter.net"
 MARKER = ".built-by-build-py"
 
@@ -357,7 +359,7 @@ def page(title, body, prefix="", head=""):
   <nav aria-label="Site"><ul>
     <li><a href="{prefix}index.html">Showcase</a></li>
     <li><a href="{prefix}members.html">Members</a></li>
-    <li><a href="{COMMUNITY_URL}">Community</a></li>
+    <li><a href="{COMMUNITY_PAGE_URL}">Community</a></li>
     <li><a href="{HOME_URL}">DataCrafter.net</a></li>
   </ul></nav>
 </div></header>
