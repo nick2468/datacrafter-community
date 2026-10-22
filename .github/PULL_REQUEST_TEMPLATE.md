@@ -32,7 +32,7 @@ See CONTRIBUTING.md for the full rules.
 
 ## Licence
 
-- [ ] I keep the copyright in this contribution and I license it under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+- [ ] I keep the copyright in this contribution, and I give DataCrafter Software Labs the [contribution licence in CONTRIBUTING.md](https://github.com/nick2468/datacrafter-community/blob/main/CONTRIBUTING.md#contribution-licence).
 
 ## LinkedIn (optional)
 

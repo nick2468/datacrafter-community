@@ -57,7 +57,7 @@ README.md                       this file
 CONTRIBUTING.md                 how to report, propose and submit; the rules
 MEMBERS.md                      the ledger: one row per Data Crafter
 SECURITY.md                     where security reports go
-LICENSE                         CC BY 4.0 for entries and concepts; MIT for site/build.py
+LICENSE                         the contribution licence for words and pictures; MIT for site/build.py
 .github/ISSUE_TEMPLATE/         bug report and enhancement idea templates
 .github/PULL_REQUEST_TEMPLATE.md
 concepts/                       concept documents, one .md each
@@ -103,5 +103,7 @@ not committed. Pages builds it fresh each time.
 
 ## Licence
 
-Entries and concepts are licensed CC BY 4.0. The build script is licensed MIT. See
-[LICENSE](LICENSE).
+Contributors keep the copyright in their entries and concepts, and give DataCrafter
+Software Labs a licence to use them (see
+[CONTRIBUTING.md](CONTRIBUTING.md#contribution-licence)). No one else gets a licence to
+reuse them. The build script is licensed MIT. See [LICENSE](LICENSE).

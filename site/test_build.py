@@ -159,6 +159,14 @@ class BuildTest(unittest.TestCase):
             self.assertIn('<a href="https://www.datacrafter.net/community">Contribute words, not code.</a>', footer, path.name)
             self.assertNotIn("github.com", footer, path.name)
 
+    def test_footer_states_the_contribution_terms_not_cc_by(self):
+        # Founder 2026-10-22: contributions are licensed to DataCrafter Software Labs alone.
+        for path in sorted(self.out.rglob("*.html")):
+            page = path.read_text(encoding="utf-8")
+            self.assertNotIn("CC BY", page, path.name)
+            footer = page.split("<footer>")[1].split("</footer>")[0]
+            self.assertIn("shown with their makers' permission and credited to them", footer, path.name)
+
     def test_index_leads_with_a_card_for_every_showcase(self):
         grid = section(self.read("index.html"), "showcases")
         links = card_links(grid)

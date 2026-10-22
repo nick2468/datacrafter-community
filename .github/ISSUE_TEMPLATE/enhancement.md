@@ -6,6 +6,9 @@ labels: enhancement
 ---
 
 <!--
+By submitting this Issue you give DataCrafter Software Labs the contribution licence in
+CONTRIBUTING.md. You keep your copyright.
+
 Thank you. Please describe the problem before the proposal. A clear problem is worth
 more than a detailed solution, because the founder and the AI agents can often find a
 better fit for it once they understand it.

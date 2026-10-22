@@ -6,6 +6,9 @@ labels: bug
 ---
 
 <!--
+By submitting this Issue you give DataCrafter Software Labs the contribution licence in
+CONTRIBUTING.md. You keep your copyright.
+
 Thank you. A report written to this template is most of what an AI agent needs to fix
 the bug, so please fill in every section.
 

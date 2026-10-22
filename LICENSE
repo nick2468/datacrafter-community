@@ -1,9 +1,9 @@
-This repository uses two licences. Part 1 covers the words and pictures. Part 2 covers
-the build script.
+This repository has two parts. Part 1 covers the words and pictures. Part 2 covers the
+build script.
 
 
 ==============================================================================
-PART 1. ENTRIES AND CONCEPTS: CC BY 4.0
+PART 1. ENTRIES, CONCEPTS AND OTHER CONTRIBUTIONS
 ==============================================================================
 
 Applies to everything in this repository except the files named in Part 2. That
@@ -11,18 +11,17 @@ includes every showcase entry (the entry.md files and their media), every concep
 document under concepts/, the platform content under showcase/platform/, and the
 Markdown documents at the root (README.md, CONTRIBUTING.md, MEMBERS.md, SECURITY.md).
 
-Each contributor keeps the copyright in their own contribution and licenses it under
-the Creative Commons Attribution 4.0 International licence (CC BY 4.0).
+Each contributor keeps the copyright in their own contribution, and gives
+DataCrafter Software Labs Pty. Ltd. the contribution licence set out in
+CONTRIBUTING.md. That applies to every route: a pull request, an Issue, a
+Discussion or a comment.
 
-You may share and adapt this material for any purpose, if you give appropriate credit
-to the contributor named in the entry, concept or commit, provide a link to the licence,
-and indicate if you made changes.
+No licence is given to anyone else. You may read this material and link to it,
+and quote from it as copyright law allows. To reuse more, ask the contributor or
+DataCrafter Software Labs.
 
-The full legal code is at:
-https://creativecommons.org/licenses/by/4.0/legalcode
-
-A plain-language summary is at:
-https://creativecommons.org/licenses/by/4.0/
+GitHub's Terms of Service separately let GitHub users view and fork public
+content through GitHub itself. That is GitHub's rule, and it gives no other rights.
 
 
 ==============================================================================

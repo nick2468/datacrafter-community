@@ -119,14 +119,31 @@ Snipping Tool can record the screen, and ShareX is free if you want to trim or a
 
 ## Contribution licence
 
-You keep the copyright in what you contribute. By opening a pull request with an entry or
-a concept, you license it under the
-[Creative Commons Attribution 4.0 International licence (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/).
+You keep the copyright in what you contribute. When you contribute, through a pull
+request, an Issue, a Discussion or a comment, you agree to these terms:
 
-That lets the showcase show your entry, lets DataCrafter Software Labs reuse a screenshot
-in a post with credit to you, and lets a concept be turned into a specification. The pull
-request template has a box to tick for this. A pull request without the box ticked is not
-merged.
+1. **A licence to us.** You give DataCrafter Software Labs Pty. Ltd. a free, worldwide,
+   permanent licence that you cannot withdraw, to use your contribution in any way. That
+   includes copying it, changing it, publishing it, building it into DataCrafter and our
+   other products and services, and passing those rights on to others, for example to a
+   company that takes over the product. It is not exclusive: you may still use your own
+   work however you like.
+2. **Editing and credit.** You consent to us editing, shortening or combining your
+   contribution, and to using it without naming you. This is your consent under the
+   moral rights in Australia's Copyright Act. We aim to credit you in the showcase, the
+   members list and the release notes, but credit is our practice, not a condition of
+   the licence.
+3. **It is yours to give.** You confirm the contribution is your own work, or that you
+   may share it, and that it holds nothing you are not allowed to share: no employer's
+   confidential information, no client's data, no one else's personal details.
+4. **No obligation.** We do not have to use a contribution, pay for it or keep it
+   published.
+
+Only DataCrafter Software Labs gets this licence. It gives no one else a right to reuse
+your work.
+
+The pull request template has a box to tick for this. A pull request without the box
+ticked is not merged.
 
 ## Removal
 
@@ -134,6 +151,7 @@ merged.
 - The founder may remove any entry.
 - Your row in `MEMBERS.md` stays unless you ask for it to go. To ask, open an Issue or
   contact the founder.
+- Removing an entry from the showcase does not end the licence above.
 
 ## Security problems
 
