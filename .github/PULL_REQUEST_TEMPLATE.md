@@ -21,7 +21,7 @@ See CONTRIBUTING.md for the full rules.
 - [ ] No frame shows a key value, a token, a URL with credentials, or an internal hostname.
 - [ ] `entry.md` has a caption and names the DataCrafter version the media shows.
 - [ ] Every file is PNG, JPG or MP4, at most 10 MB, and images are at least 1200 px wide.
-- [ ] The entry has at most six media files.
+- [ ] The entry has at most eight media files.
 - [ ] Every media file has alt text in the `media` list of `entry.md`.
 
 ### For a concept

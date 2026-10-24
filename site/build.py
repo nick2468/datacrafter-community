@@ -31,6 +31,8 @@ MARKER = ".built-by-build-py"
 
 IMAGE_TYPES = {".png", ".jpg", ".jpeg"}
 VIDEO_TYPES = {".mp4"}
+# CONTRIBUTING.md, "Media limits". Eight since 2026-10-25; it was six.
+MAX_MEDIA = 8
 FRONT_MATTER_KEYS = ("title", "version", "date")
 MEMBER_KEYS = ("member", "github")
 
@@ -177,6 +179,8 @@ def parse_entry(text, source):
     if meta.get("moved_from") and not SLUG.fullmatch(meta["moved_from"]):
         raise BuildError(f"{source}: 'moved_from' must be an old folder name, "
                          "for example 001-yourhandle-old-title")
+    if len(meta["media"]) > MAX_MEDIA:
+        raise BuildError(f"{source}: {len(meta['media'])} media files; an entry may have at most {MAX_MEDIA}")
     for item in meta["media"]:
         if not item.get("file"):
             raise BuildError(f"{source}: a media item has no 'file'")

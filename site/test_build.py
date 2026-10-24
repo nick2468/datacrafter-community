@@ -84,6 +84,13 @@ OFFICIAL = "000-datacrafter-tour"
 CARD = re.compile(r'<li class="card">(.*?)</li>', re.S)
 
 
+def media_entry(count):
+    """FIXTURE_EMPTY_ENTRY with count screenshots in its media list."""
+    items = "".join(f"  - file: {n:02}-screen.png\n    alt: Fixture screenshot {n}\n"
+                    for n in range(1, count + 1))
+    return FIXTURE_EMPTY_ENTRY.replace("date: 2026-01-02\n", f"date: 2026-01-02\nmedia:\n{items}")
+
+
 def section(page, heading_id):
     """The HTML of the <section> labelled by heading_id."""
     match = re.search(rf'<section aria-labelledby="{heading_id}">(.*?)</section>', page, re.S)
@@ -347,6 +354,14 @@ class BuildTest(unittest.TestCase):
         bad = FIXTURE_ENTRY.replace("01-screen.png", "01-screen.gif")
         with self.assertRaises(build.BuildError):
             build.parse_entry(bad, "fixture")
+
+    def test_entry_of_eight_media_files_builds(self):
+        meta, _ = build.parse_entry(media_entry(8), "fixture")
+        self.assertEqual(len(meta["media"]), 8)
+
+    def test_entry_of_nine_media_files_fails_the_build(self):
+        with self.assertRaises(build.BuildError):
+            build.parse_entry(media_entry(9), "fixture")
 
     def test_author_must_be_datacrafter(self):
         bad = FIXTURE_OFFICIAL_ENTRY.replace("author: DataCrafter", "author: Someone Else")

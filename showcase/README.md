@@ -38,7 +38,7 @@ section. Its folder name uses `datacrafter` where a member's uses their GitHub h
 | `date` | required | required | The date of the showcase, as YYYY-MM-DD |
 | `summary` | optional | optional | One line for the card. Without it, the card shows the caption's first sentence |
 | `moved_from` | optional | optional | The folder's old name, after a rename. The old page then sends visitors to the new one |
-| `media` | the list | the list | Each item has `file` and `alt` |
+| `media` | the list | the list | Each item has `file` and `alt`. At most eight items: the build fails on a ninth |
 
 The caption follows the closing `---`. Blank lines split it into paragraphs.
 

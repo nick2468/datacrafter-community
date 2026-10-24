@@ -111,7 +111,7 @@ These are the standing rules already in the house standards, restated for pictur
 - Formats: PNG, JPG or MP4.
 - Images at least 1200 px wide.
 - At most 10 MB per file.
-- At most six files per entry.
+- At most eight files per entry.
 - Alt text on every file, in the `media` list of `entry.md`.
 
 A silent clip of twenty to forty seconds with a one-line caption works well. Windows
