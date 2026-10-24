@@ -70,7 +70,7 @@ site/test_build.py              a unit test for the build script
 ## The showcase site
 
 `site/build.py` turns `showcase/` and `MEMBERS.md` into a static site in `site/dist`. It
-is Python 3 with no third-party packages. The site will be served at
+is Python 3 with no third-party packages. The site is served at
 `showcase.datacrafter.net`.
 
 To build it on your own machine:
@@ -85,21 +85,19 @@ Then open `site/dist/index.html` in a browser. To run the test:
 python -m unittest discover -s site
 ```
 
-### How Cloudflare Pages builds it
+### How the site is published
 
-The site is a Git-connected Cloudflare Pages project. Every merge to `main` is a deploy.
-The project settings are:
+The site is the Cloudflare Pages project `datacrafter-showcase`, served at
+`showcase.datacrafter.net`. **It is not connected to Git, so merging to `main` publishes
+nothing.** To publish, build it locally and upload `site/dist`, from the repository root:
 
-| Setting | Value |
-|---|---|
-| Production branch | `main` |
-| Framework preset | None |
-| Build command | `python site/build.py` |
-| Build output directory | `site/dist` |
-| Custom domain | `showcase.datacrafter.net` |
+```bash
+python site/build.py
+npx wrangler@3 pages deploy site/dist --project-name datacrafter-showcase --branch main
+```
 
-The build needs only the Python 3 that the Pages build image already has. `site/dist` is
-not committed. Pages builds it fresh each time.
+Run it from a clean checkout of `main`, so the live site matches a commit. Wrangler records
+that commit against the deployment. `site/dist` is never committed.
 
 ## Licence
 
