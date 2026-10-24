@@ -159,6 +159,24 @@ class BuildTest(unittest.TestCase):
             self.assertIn('<a href="https://www.datacrafter.net/community">Contribute words, not code.</a>', footer, path.name)
             self.assertNotIn("github.com", footer, path.name)
 
+    def test_header_is_the_brand_and_three_links(self):
+        # The brand, with the mark, goes home to www.datacrafter.net. The header has no
+        # link to the showcase index: entry and members pages link back from their bodies.
+        for path in sorted(self.out.rglob("*.html")):
+            page = path.read_text(encoding="utf-8")
+            header = page.split("<header>")[1].split("</header>")[0]
+            brand = header.split('<a class="brand" ')[1].split("</a>")[0]
+            self.assertTrue(brand.startswith('href="https://www.datacrafter.net"><svg '), path.name)
+            self.assertTrue(brand.endswith("</svg>DataCrafter"), path.name)
+            nav = header.split('<nav aria-label="Site">')[1].split("</nav>")[0]
+            labels = re.findall(r">([^<>]+)</a>", nav)
+            self.assertEqual(labels, ["DataCrafter.net", "Members", "Community"], path.name)
+            self.assertNotIn("index.html", header, path.name)
+
+    def test_members_page_links_back_to_the_showcase(self):
+        page = self.read("members.html")
+        self.assertIn('<a href="index.html">Back to the showcase</a>', page)
+
     def test_footer_states_the_contribution_terms_not_cc_by(self):
         # Founder 2026-10-22: contributions are licensed to DataCrafter Software Labs alone.
         for path in sorted(self.out.rglob("*.html")):

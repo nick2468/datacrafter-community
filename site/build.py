@@ -72,7 +72,9 @@ p{margin:0 0 14px}
 header{border-bottom:1px solid var(--line-dark)}
 .nav{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;
   gap:12px 24px;padding-block:18px}
-.brand{font-weight:600;font-size:19px;letter-spacing:-.025em;color:#fff;text-decoration:none}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:19px;
+  letter-spacing:-.025em;color:#fff;text-decoration:none}
+.brand svg{flex-shrink:0}
 .nav ul{display:flex;flex-wrap:wrap;gap:18px;margin:0;padding:0;list-style:none}
 .nav a{text-decoration:none}
 main{padding-block:48px 72px}
@@ -336,6 +338,14 @@ def group_by_member(entries, headers, rows):
 # and home-screen icons only keep a file icon.
 ICON_SVG = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%2314161a'/%3E%3Ccircle cx='7' cy='7' r='2.1' fill='%23e0a230'/%3E%3Ccircle cx='7' cy='17' r='2.1' fill='%23f4f4f0'/%3E%3Ccircle cx='17.5' cy='12' r='2.1' fill='%23f4f4f0'/%3E%3Cpath d='M8.7 8 15.6 10.9M8.7 16 15.6 13.1' stroke='%23f4f4f0' stroke-width='1.3'/%3E%3C/svg%3E"
 ICON_PNG = "icon-512.png"
+# The header's mark, as in www.datacrafter.net's footer: untiled, because a dark tile
+# would vanish on this dark ground.
+BRAND_MARK = (
+    '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" aria-hidden="true">'
+    '<circle cx="5" cy="6" r="2.4" fill="#E0A230"/>'
+    '<circle cx="5" cy="18" r="2.4" fill="#FAFAF7"/>'
+    '<circle cx="19" cy="12" r="2.4" fill="#FAFAF7"/>'
+    '<path d="M7 6.8 17 11.2M7 17.2 17 12.8" stroke="#FAFAF7" stroke-width="1.4"/></svg>')
 
 
 def page(title, body, prefix="", head=""):
@@ -354,12 +364,11 @@ def page(title, body, prefix="", head=""):
 </head>
 <body>
 <header><div class="wrap nav">
-  <a class="brand" href="{prefix}index.html">DataCrafter showcase</a>
+  <a class="brand" href="{HOME_URL}">{BRAND_MARK}DataCrafter</a>
   <nav aria-label="Site"><ul>
-    <li><a href="{prefix}index.html">Showcase</a></li>
+    <li><a href="{HOME_URL}">DataCrafter.net</a></li>
     <li><a href="{prefix}members.html">Members</a></li>
     <li><a href="{COMMUNITY_PAGE_URL}">Community</a></li>
-    <li><a href="{HOME_URL}">DataCrafter.net</a></li>
   </ul></nav>
 </div></header>
 <main class="wrap">
@@ -516,7 +525,8 @@ a showcase entry, a bug report, or an enhancement idea. {count} {noun} so far.</
 {body_rows}
 </tbody>
 </table></div>
-</section>"""
+</section>
+<p><a href="index.html">Back to the showcase</a></p>"""
     return page("Members", body)
 
 
