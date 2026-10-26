@@ -71,7 +71,7 @@ FIXTURE_MEMBERS = """# Members
 
 | Number | Name | GitHub | LinkedIn | Joined | First contribution |
 |---|---|---|---|---|---|
-| 001 | Test Fixture Person | [zz-fixture](https://github.com/zz-fixture) | | 2026-01-01 | founder |
+| 001 | Test Fixture Person | [zz-fixture](https://github.com/zz-fixture) | https://www.linkedin.com/in/zz-fixture-person | 2026-01-01 | founder |
 | 002 | Second Fixture Person | [zz-other](https://github.com/zz-other) | | 2026-01-02 | showcase entry |
 | 003 | Quiet Fixture Person | [zz-quiet](https://github.com/zz-quiet) | | 2026-01-03 | bug report |
 """
@@ -153,8 +153,15 @@ class BuildTest(unittest.TestCase):
             footer = page.split("<footer>")[1].split("</footer>")[0]
             for part in (nav, footer):
                 self.assertIn('<a href="https://www.datacrafter.net">', part, path.name)
-            # Our own site, so it opens in the same tab.
-            self.assertNotIn("target=", page, path.name)
+            # Our own site, so our own links open in the same tab. The only links that
+            # open a new tab are the LinkedIn ones, which leave the site.
+            for anchor in page.split("<a ")[1:]:
+                attrs = anchor.split(">")[0]
+                if "datacrafter.net" in attrs:
+                    self.assertNotIn("target=", attrs, path.name)
+                if "target=" in attrs:
+                    self.assertIn("linkedin.com", attrs, path.name)
+                    self.assertIn('rel="noopener"', attrs, path.name)
 
     def test_header_and_footer_community_links_go_to_our_community_page(self):
         for path in sorted(self.out.rglob("*.html")):
@@ -179,6 +186,33 @@ class BuildTest(unittest.TestCase):
             labels = re.findall(r">([^<>]+)</a>", nav)
             self.assertEqual(labels, ["DataCrafter.net", "Members", "Community"], path.name)
             self.assertNotIn("index.html", header, path.name)
+
+    def test_top_line_matches_the_main_site(self):
+        # Founder, 2026-10-26: the showcase stays dark, but its top line is
+        # www.datacrafter.net's header component - the same coming-soon strip, brand
+        # lockup, nav, LinkedIn mark and Get in touch button - dressed for a dark ground.
+        for path in sorted(self.out.rglob("*.html")):
+            page = path.read_text(encoding="utf-8")
+            topbar = page.split('<div class="topbar">')[1].split("</div></div>")[0]
+            self.assertIn("Coming soon", topbar, path.name)
+            self.assertIn("not yet generally available", topbar, path.name)
+            self.assertIn('href="https://www.datacrafter.net/#contact"', topbar, path.name)
+            cta = page.split('<div class="nav-cta">')[1].split("</div>")[0]
+            self.assertIn('class="li-nav"', cta, path.name)
+            self.assertIn("linkedin.com/company/datacrafter-software-labs", cta, path.name)
+            self.assertIn('class="btn btn-solid">Get in touch</a>', cta, path.name)
+
+    def test_members_linkedin_column_shows_the_mark(self):
+        # The ledger holds a URL; the page shows LinkedIn's own mark, as www does.
+        page = self.read("members.html")
+        self.assertIn('<a class="li-cell" href="https://www.linkedin.com/in/zz-fixture-person" '
+                      'target="_blank" rel="noopener" '
+                      'aria-label="Test Fixture Person on LinkedIn" '
+                      'title="Test Fixture Person on LinkedIn">', page)
+        # The raw profile URL never shows, and a member who did not ask for a link
+        # gets an empty cell rather than a stray mark.
+        self.assertNotIn(">https://www.linkedin.com", page)
+        self.assertEqual(page.count('class="li-cell"'), 1)
 
     def test_members_page_links_back_to_the_showcase(self):
         page = self.read("members.html")

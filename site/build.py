@@ -27,6 +27,8 @@ SITE_TITLE = "The DataCrafter showcase"
 # The header and footer send newcomers to our own Community page first, which explains GitHub.
 COMMUNITY_PAGE_URL = "https://www.datacrafter.net/community"
 HOME_URL = "https://www.datacrafter.net"
+CONTACT_URL = f"{HOME_URL}/#contact"
+COMPANY_LINKEDIN_URL = "https://www.linkedin.com/company/datacrafter-software-labs/"
 MARKER = ".built-by-build-py"
 
 IMAGE_TYPES = {".png", ".jpg", ".jpeg"}
@@ -57,7 +59,8 @@ STYLE = """
   --sans:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
   --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Consolas,monospace;
   --maxw:1120px;
-  --gutter:clamp(16px,5vw,56px);
+  /* The same gutter as www.datacrafter.net, so the two sites' columns line up. */
+  --gutter:clamp(20px,5vw,56px);
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--ink);color:var(--paper);font-family:var(--sans);
@@ -66,25 +69,61 @@ a{color:var(--brass-br)}
 a:hover{color:var(--paper)}
 a:focus-visible{outline:2px solid var(--brass-br);outline-offset:3px}
 h1,h2,h3,h4{margin:0 0 12px;font-weight:600;line-height:1.14;letter-spacing:-.021em;color:#fff}
-h1{font-size:clamp(30px,4vw,44px)}
+/* www's .doc-head h1, so a showcase page's first line is the same size as a page's
+   first line on the main site. */
+h1{font-size:clamp(32px,4.6vw,50px);letter-spacing:-.03em}
 h2{font-size:clamp(22px,2.6vw,30px)}
 h3{font-size:20px}
 p{margin:0 0 14px}
 .wrap{max-width:var(--maxw);margin:0 auto;padding-inline:var(--gutter)}
-header{border-bottom:1px solid var(--line-dark)}
+/* The top line, matched to www.datacrafter.net's header component (site.css, "header")
+   and dressed for a dark ground: the same coming-soon strip above it, the same sticky
+   blurred bar, the same brand lockup, nav, LinkedIn icon and Get in touch button.
+   The mark stays untiled here because www's own tile is ink, which would vanish on this
+   background - the same choice www makes in its footer. */
+.topbar{background:var(--ink-2);color:var(--paper);border-bottom:1px solid var(--line-dark)}
+.topbar-in{max-width:var(--maxw);margin:0 auto;padding:11px var(--gutter);
+  display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;
+  font-size:14.5px;line-height:1.5;text-align:center}
+.topbar .tag{font-family:var(--mono);font-size:10.5px;font-weight:500;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--brass-br);border:1px solid rgba(224,162,48,.45);
+  border-radius:2px;padding:3px 9px;white-space:nowrap}
+.topbar p{margin:0;color:var(--dim)}
+.topbar a{color:#fff;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+.topbar a:hover{color:var(--brass-br)}
+header{position:sticky;top:0;z-index:60;border-bottom:1px solid var(--line-dark);
+  background:rgba(20,22,26,.85);backdrop-filter:saturate(140%) blur(10px)}
 .nav{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;
   gap:12px 24px;padding-block:18px}
 .brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:19px;
   letter-spacing:-.025em;color:#fff;text-decoration:none}
 .brand svg{flex-shrink:0}
-.nav ul{display:flex;flex-wrap:wrap;gap:18px;margin:0;padding:0;list-style:none}
+.nav ul{display:flex;flex-wrap:wrap;gap:16px;margin:0;padding:0;list-style:none}
 .nav a{text-decoration:none}
+.nav ul a{font-size:15px;color:var(--dim);white-space:nowrap}
+.nav ul a:hover{color:#fff}
+.nav-cta{display:flex;align-items:center;gap:12px}
+.btn{display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:500;
+  padding:12px 22px;border-radius:3px;border:1px solid transparent;white-space:nowrap;
+  text-decoration:none;transition:background .18s ease,transform .18s ease}
+/* www's .btn-solid is ink on cream. Inverted here: the same shape, the same weight,
+   legible on ink. */
+.btn-solid{background:var(--paper);color:var(--ink)}
+.btn-solid:hover{background:#fff;color:var(--ink);transform:translateY(-1px)}
+.li-nav{display:inline-flex;align-items:center;justify-content:center;width:28px;height:40px;
+  border-radius:3px;transition:transform .18s ease}
+.li-nav:hover{transform:translateY(-1px)}
+.li-nav svg,.li-cell svg{flex-shrink:0}
+.li-cell{display:inline-flex;align-items:center}
+/* Phones get a header row that fits instead: www hides the icon at the same width. */
+@media (max-width:440px){.li-nav{display:none}.nav{gap:12px}.nav-cta{gap:6px}
+  .nav-cta .btn-solid{padding-inline:16px}}
 main{padding-block:48px 72px}
 section{margin-bottom:56px}
 .eyebrow{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.15em;
   text-transform:uppercase;color:var(--brass-br);margin-bottom:10px}
 .meta{font-family:var(--mono);font-size:13px;color:var(--dim);margin-bottom:18px}
-.lede{color:var(--dim);max-width:660px}
+.lede{color:var(--dim);max-width:660px;font-size:clamp(16.5px,1.8vw,19px)}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
 .cards{margin:0;padding:0;list-style:none}
 .card{position:relative;display:flex;flex-direction:column;background:var(--ink-2);
@@ -223,6 +262,36 @@ def first_sentence(text):
     return re.split(r"(?<=[.!?])\s", flat, maxsplit=1)[0]
 
 
+# A LinkedIn profile URL, written without backslash escapes so the pattern reads plainly.
+LINKEDIN_URL = re.compile("https?://([a-z0-9-]+[.])?linkedin[.]com/[^ )>]+", re.I)
+
+
+def linkedin_cell(cell, name):
+    """A LinkedIn column cell: the [in] mark linking to the profile, or nothing.
+
+    A row holds a bare URL or a [label](url) link, and LinkedIn is optional, so most
+    cells are empty. A cell that does hold a profile shows the mark, the way
+    www.datacrafter.net shows it, rather than a raw profile URL across the table.
+    """
+    match = LINK.search(cell)
+    url = (match.group(2) if match else cell).strip()
+    if not url:
+        return ""
+    if not LINKEDIN_URL.fullmatch(url):
+        return inline_markdown(cell)
+    label = html.escape(f"{name} on LinkedIn" if name else "LinkedIn")
+    return (f'<a class="li-cell" href="{html.escape(url)}" target="_blank" rel="noopener" '
+            f'aria-label="{label}" title="{label}">{linkedin_icon(21)}</a>')
+
+
+def column_of(headers, title):
+    """The index of a column by its heading, or None if the ledger has no such column."""
+    for index, header in enumerate(headers):
+        if header.strip().lower() == title:
+            return index
+    return None
+
+
 def handle_of(cell):
     """The GitHub handle in a MEMBERS.md cell: the label of [handle](url), or the bare text."""
     match = LINK.search(cell)
@@ -351,6 +420,25 @@ BRAND_MARK = (
     '<circle cx="19" cy="12" r="2.4" fill="#FAFAF7"/>'
     '<path d="M7 6.8 17 11.2M7 17.2 17 12.8" stroke="#FAFAF7" stroke-width="1.4"/></svg>')
 
+# LinkedIn's own [in] path, unmodified, in white: one of the three colours its brand
+# guidelines allow, and the one www.datacrafter.net uses wherever the mark sits on ink.
+# Never drawn under 21px, which is LinkedIn's on-screen minimum.
+LINKEDIN_PATH = (
+    "M0,4.00989318 C0,1.79529033 1.79405245,0 4.00989318,0 L43.9901068,0 C46.2047097,0 48,"
+    "1.79405245 48,4.00989318 L48,43.9901068 C48,46.2047097 46.2059475,48 43.9901068,48 "
+    "L4.00989318,48 C1.79529033,48 0,46.2059475 0,43.9901068 L0,4.00989318 Z M19,18.3 "
+    "L25.5,18.3 L25.5,21.566 C26.437,19.688 28.838,18 32.445,18 C39.359,18 41,21.738 41,"
+    "28.597 L41,41.3 L34,41.3 L34,30.159 C34,26.253 33.063,24.05 30.68,24.05 C27.375,24.05 "
+    "26,26.425 26,30.159 L26,41.3 L19,41.3 L19,18.3 Z M7,41 L14,41 L14,18 L7,18 L7,41 Z "
+    "M15,10.5 C15,12.985 12.985,15 10.5,15 C8.015,15 6,12.985 6,10.5 C6,8.015 8.015,6 10.5,"
+    "6 C12.985,6 15,8.015 15,10.5 Z")
+
+
+def linkedin_icon(size):
+    return (f'<svg width="{size}" height="{size}" viewBox="0 0 48 48" aria-hidden="true" '
+            f'focusable="false"><path fill="#FFFFFF" fill-rule="evenodd" d="{LINKEDIN_PATH}"/>'
+            "</svg>")
+
 
 def page(title, body, prefix="", head=""):
     """Wrap a body in the site shell. prefix is the relative path back to the site root."""
@@ -367,6 +455,11 @@ def page(title, body, prefix="", head=""):
 <style>{STYLE}</style>{head}
 </head>
 <body>
+<div class="topbar"><div class="topbar-in">
+  <span class="tag">Coming soon</span>
+  <p>DataCrafter is in active development and not yet generally available.</p>
+  <a href="{CONTACT_URL}">Register your interest &rarr;</a>
+</div></div>
 <header><div class="wrap nav">
   <a class="brand" href="{HOME_URL}">{BRAND_MARK}DataCrafter</a>
   <nav aria-label="Site"><ul>
@@ -374,6 +467,12 @@ def page(title, body, prefix="", head=""):
     <li><a href="{prefix}members.html">Members</a></li>
     <li><a href="{COMMUNITY_PAGE_URL}">Community</a></li>
   </ul></nav>
+  <div class="nav-cta">
+    <a href="{COMPANY_LINKEDIN_URL}" target="_blank" rel="noopener" class="li-nav"
+       aria-label="DataCrafter Software Labs on LinkedIn"
+       title="DataCrafter Software Labs on LinkedIn">{linkedin_icon(28)}</a>
+    <a href="{CONTACT_URL}" class="btn btn-solid">Get in touch</a>
+  </div>
 </div></header>
 <main class="wrap">
 {body}
@@ -515,8 +614,16 @@ def render_members(headers, rows):
     count = len(rows)
     noun = "member" if count == 1 else "members"
     head = "".join(f'<th scope="col">{html.escape(h)}</th>' for h in headers)
+    linkedin_col = column_of(headers, "linkedin")
+    name_col = column_of(headers, "name")
+
+    def cells(row):
+        name = row[name_col] if name_col is not None and name_col < len(row) else ""
+        for index, cell in enumerate(row):
+            value = linkedin_cell(cell, name) if index == linkedin_col else inline_markdown(cell)
+            yield f"<td>{value}</td>"
     body_rows = "\n".join(
-        "<tr>" + "".join(f"<td>{inline_markdown(cell)}</td>" for cell in row) + "</tr>"
+        "<tr>" + "".join(cells(row)) + "</tr>"
         for row in rows)
     body = f"""<section>
 <p class="eyebrow">The ledger</p>
