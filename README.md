@@ -6,22 +6,25 @@ ledger and the small script that builds the DataCrafter showcase site.
 
 It holds no product code.
 
-## Why contributions are words
+## How a contribution becomes a change
 
 DataCrafter is built by AI from specifications written by people and AI together. People
-conceived it. People and AI specified it. AI wrote the code.
+conceived it. People and AI specified it. AI wrote the code. So every change starts from a
+written specification, and an AI agent builds from it.
 
-Every change starts as a written specification, and an AI agent builds from it. So a
-contribution here is the step before a build, which is where it does the most good:
+That is why a well-written report goes a long way here: it is most of what a build needs
+already. What to send:
 
 - a bug described well enough to reproduce,
 - an enhancement idea that states the problem first,
 - a concept or a specification change, written as one Markdown file,
 - a showcase entry that shows something you built.
 
-The product code is not public today, so patches are not part of the process. That may
-change later. Words are credited either way: release notes name the person whose report
-led to a fix.
+The product source is not public yet, so there is nowhere to send a patch today. If it is
+opened later, code contributions will be welcome too.
+
+Contributions are credited either way: release notes name the person whose report led to a
+fix.
 
 ## Becoming a Data Crafter
 

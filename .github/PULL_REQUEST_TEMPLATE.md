@@ -1,6 +1,6 @@
 <!--
-This repository accepts showcase entries and concepts. It holds no product code, so a pull
-request here is Markdown and media.
+This repository holds showcase entries and concepts, so a pull request here is Markdown and
+media.
 See CONTRIBUTING.md for the full rules.
 -->
 
@@ -14,7 +14,7 @@ See CONTRIBUTING.md for the full rules.
 ## Rules checklist
 
 - [ ] This pull request adds one entry or one concept, and nothing else.
-- [ ] It contains no code.
+- [ ] It adds Markdown and media only.
 
 ### For a showcase entry
 

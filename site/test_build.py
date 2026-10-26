@@ -163,7 +163,7 @@ class BuildTest(unittest.TestCase):
             self.assertIn('<a href="https://www.datacrafter.net/community">Community</a>', nav, path.name)
             self.assertNotIn("github.com", nav, path.name)
             footer = page.split("<footer>")[1].split("</footer>")[0]
-            self.assertIn('<a href="https://www.datacrafter.net/community">Help shape it, in words.</a>', footer, path.name)
+            self.assertIn('<a href="https://www.datacrafter.net/community">Help shape what comes next.</a>', footer, path.name)
             self.assertNotIn("github.com", footer, path.name)
 
     def test_header_is_the_brand_and_three_links(self):
