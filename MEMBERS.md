@@ -8,4 +8,4 @@ This list holds no email addresses. LinkedIn is optional and only shown if you a
 
 | Number | Name | GitHub | LinkedIn | Joined | First contribution |
 |---|---|---|---|---|---|
-| 001 | Nick Walker | [nick2468](https://github.com/nick2468) | | 2026-10-20 | founder |
+| 001 | Nick Walker | [nick2468](https://github.com/nick2468) | https://www.linkedin.com/in/nick-walker-b6061a409/ | 2026-10-20 | founder |
