@@ -4,26 +4,24 @@ This repository is the home of the DataCrafter community. It holds bug reports,
 enhancement ideas, concept documents and showcase entries. It also holds the member
 ledger and the small script that builds the DataCrafter showcase site.
 
-It holds no product code, and it accepts none.
+It holds no product code.
 
-## Why words, not code
+## Why contributions are words
 
 DataCrafter is built by AI from specifications written by people and AI together. People
 conceived it. People and AI specified it. AI wrote the code.
 
-So the product code stays private, and that is not secrecy. The project does not want
-human code. A patch would have to be turned back into a specification before an AI agent
-could own it, so there is nothing for a pull request of code to improve.
-
-What the project wants is words:
+Every change starts as a written specification, and an AI agent builds from it. So a
+contribution here is the step before a build, which is where it does the most good:
 
 - a bug described well enough to reproduce,
 - an enhancement idea that states the problem first,
 - a concept or a specification change, written as one Markdown file,
 - a showcase entry that shows something you built.
 
-We do not accept code. We accept well-written bug reports, specification changes and
-concepts, and we credit them. Release notes name the person whose report led to a fix.
+The product code is not public today, so patches are not part of the process. That may
+change later. Words are credited either way: release notes name the person whose report
+led to a fix.
 
 ## Becoming a Data Crafter
 

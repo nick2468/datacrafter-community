@@ -3,12 +3,11 @@
 Thank you for helping. This file says how to report a bug, propose an idea or a concept,
 and submit a showcase entry. It also states the rules every contribution follows.
 
-## No code, words welcome, credited
+## Words, welcome and credited
 
-DataCrafter is built by AI from specifications written by people and AI together. The
-project does not accept code, and this repository holds none. It accepts well-written bug
-reports, enhancement ideas, concepts, specification changes and showcase entries, and it
-credits them.
+DataCrafter is built by AI from specifications written by people and AI together. This
+repository holds no product code. What it accepts is well-written bug reports, enhancement
+ideas, concepts, specification changes and showcase entries, and it credits them.
 
 Your words are the step before a build. Every change to DataCrafter starts as a written
 specification, and an AI agent builds from that. A bug report written to the template is

@@ -1,5 +1,6 @@
 <!--
-This repository accepts showcase entries and concepts. It does not accept code.
+This repository accepts showcase entries and concepts. It holds no product code, so a pull
+request here is Markdown and media.
 See CONTRIBUTING.md for the full rules.
 -->
 
