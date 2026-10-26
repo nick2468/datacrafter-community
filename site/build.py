@@ -52,6 +52,8 @@ STYLE = """
   --paper:#FAFAF7;
   --ink:#14161A;
   --ink-2:#1B1E25;
+  --ink-soft:#414852;
+  --line:#E4E4DE;
   --line-dark:#2A2E37;
   --brass:#A96D14;
   --brass-br:#E0A230;
@@ -76,12 +78,13 @@ h2{font-size:clamp(22px,2.6vw,30px)}
 h3{font-size:20px}
 p{margin:0 0 14px}
 .wrap{max-width:var(--maxw);margin:0 auto;padding-inline:var(--gutter)}
-/* The top line, matched to www.datacrafter.net's header component (site.css, "header")
-   and dressed for a dark ground: the same coming-soon strip above it, the same sticky
-   blurred bar, the same brand lockup, nav, LinkedIn icon and Get in touch button.
-   The mark stays untiled here because www's own tile is ink, which would vanish on this
-   background - the same choice www makes in its footer. */
-.topbar{background:var(--ink-2);color:var(--paper);border-bottom:1px solid var(--line-dark)}
+/* The top line: www.datacrafter.net's two header rows, taken from its site.css rather
+   than approximated - the ink coming-soon strip, then the cream sticky bar with the tiled
+   brand mark, the nav, the blue LinkedIn mark and the ink Get in touch button. The page
+   below them stays dark (founder, 2026-10-26). www draws the bar's bottom border only
+   once the page scrolls, through a class its script adds; this site has no script, so the
+   border is simply always there, which is what a reader sees on www anyway. */
+.topbar{background:var(--ink);color:var(--paper);border-bottom:1px solid var(--line-dark)}
 .topbar-in{max-width:var(--maxw);margin:0 auto;padding:11px var(--gutter);
   display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;
   font-size:14.5px;line-height:1.5;text-align:center}
@@ -91,31 +94,32 @@ p{margin:0 0 14px}
 .topbar p{margin:0;color:var(--dim)}
 .topbar a{color:#fff;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
 .topbar a:hover{color:var(--brass-br)}
-header{position:sticky;top:0;z-index:60;border-bottom:1px solid var(--line-dark);
-  background:rgba(20,22,26,.85);backdrop-filter:saturate(140%) blur(10px)}
+header{position:sticky;top:0;z-index:60;border-bottom:1px solid var(--line);
+  background:rgba(250,250,247,.85);backdrop-filter:saturate(140%) blur(10px)}
+/* www's header row runs wider than its text column (site.css, ".wrap.nav"). */
+.wrap.nav{max-width:1400px}
 .nav{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;
-  gap:12px 24px;padding-block:18px}
-.brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:19px;
-  letter-spacing:-.025em;color:#fff;text-decoration:none}
+  min-height:66px;gap:12px 20px;padding-block:8px}
+.brand{display:flex;align-items:center;gap:10px;font-size:19px;font-weight:600;
+  letter-spacing:-.025em;color:var(--ink);text-decoration:none}
+.brand:hover{color:var(--ink)}
 .brand svg{flex-shrink:0}
 .nav ul{display:flex;flex-wrap:wrap;gap:16px;margin:0;padding:0;list-style:none}
 .nav a{text-decoration:none}
-.nav ul a{font-size:15px;color:var(--dim);white-space:nowrap}
-.nav ul a:hover{color:#fff}
+.nav ul a{font-size:15px;color:var(--ink-soft);white-space:nowrap}
+.nav ul a:hover{color:var(--ink)}
 .nav-cta{display:flex;align-items:center;gap:12px}
 .btn{display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:500;
   padding:12px 22px;border-radius:3px;border:1px solid transparent;white-space:nowrap;
   text-decoration:none;transition:background .18s ease,transform .18s ease}
-/* www's .btn-solid is ink on cream. Inverted here: the same shape, the same weight,
-   legible on ink. */
-.btn-solid{background:var(--paper);color:var(--ink)}
-.btn-solid:hover{background:#fff;color:var(--ink);transform:translateY(-1px)}
+.btn-solid{background:var(--ink);color:var(--paper)}
+.btn-solid:hover{background:#000;color:var(--paper);transform:translateY(-1px)}
 .li-nav{display:inline-flex;align-items:center;justify-content:center;width:28px;height:40px;
   border-radius:3px;transition:transform .18s ease}
 .li-nav:hover{transform:translateY(-1px)}
 .li-nav svg,.li-cell svg{flex-shrink:0}
 .li-cell{display:inline-flex;align-items:center}
-/* Phones get a header row that fits instead: www hides the icon at the same width. */
+/* www hides the icon and tightens the row at this width, so this row does too. */
 @media (max-width:440px){.li-nav{display:none}.nav{gap:12px}.nav-cta{gap:6px}
   .nav-cta .btn-solid{padding-inline:16px}}
 main{padding-block:48px 72px}
@@ -411,17 +415,21 @@ def group_by_member(entries, headers, rows):
 # and home-screen icons only keep a file icon.
 ICON_SVG = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%2314161a'/%3E%3Ccircle cx='7' cy='7' r='2.1' fill='%23e0a230'/%3E%3Ccircle cx='7' cy='17' r='2.1' fill='%23f4f4f0'/%3E%3Ccircle cx='17.5' cy='12' r='2.1' fill='%23f4f4f0'/%3E%3Cpath d='M8.7 8 15.6 10.9M8.7 16 15.6 13.1' stroke='%23f4f4f0' stroke-width='1.3'/%3E%3C/svg%3E"
 ICON_PNG = "icon-512.png"
-# The header's mark, as in www.datacrafter.net's footer: untiled, because a dark tile
-# would vanish on this dark ground.
+# The header's mark, byte for byte www.datacrafter.net's header mark: the tiled version,
+# which works here because the header bar itself is now www's cream bar, not ink.
 BRAND_MARK = (
     '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" aria-hidden="true">'
-    '<circle cx="5" cy="6" r="2.4" fill="#E0A230"/>'
-    '<circle cx="5" cy="18" r="2.4" fill="#FAFAF7"/>'
-    '<circle cx="19" cy="12" r="2.4" fill="#FAFAF7"/>'
-    '<path d="M7 6.8 17 11.2M7 17.2 17 12.8" stroke="#FAFAF7" stroke-width="1.4"/></svg>')
+    '<rect width="24" height="24" rx="5" fill="#14161A"/>'
+    '<circle cx="7" cy="7" r="2.1" fill="#E0A230"/>'
+    '<circle cx="7" cy="17" r="2.1" fill="#F4F4F0"/>'
+    '<circle cx="17.5" cy="12" r="2.1" fill="#F4F4F0"/>'
+    '<path d="M8.7 8 15.6 10.9M8.7 16 15.6 13.1" stroke="#F4F4F0" stroke-width="1.3"/></svg>')
 
-# LinkedIn's own [in] path, unmodified, in white: one of the three colours its brand
-# guidelines allow, and the one www.datacrafter.net uses wherever the mark sits on ink.
+# LinkedIn's own [in] path, unmodified, in LinkedIn blue (founder, 2026-10-26: the
+# standard blue mark, not the white one). The path is a single shape whose letters are
+# holes, so on www's cream header the holes show cream and on this site's dark table they
+# would show near-black. A white tile of the same corner radius sits behind it, which is
+# what makes the holes read white: the standard logo, on any background.
 # Never drawn under 21px, which is LinkedIn's on-screen minimum.
 LINKEDIN_PATH = (
     "M0,4.00989318 C0,1.79529033 1.79405245,0 4.00989318,0 L43.9901068,0 C46.2047097,0 48,"
@@ -434,10 +442,13 @@ LINKEDIN_PATH = (
     "6 C12.985,6 15,8.015 15,10.5 Z")
 
 
+LINKEDIN_BLUE = "#0A66C2"
+
+
 def linkedin_icon(size):
     return (f'<svg width="{size}" height="{size}" viewBox="0 0 48 48" aria-hidden="true" '
-            f'focusable="false"><path fill="#FFFFFF" fill-rule="evenodd" d="{LINKEDIN_PATH}"/>'
-            "</svg>")
+            'focusable="false"><rect width="48" height="48" rx="4" fill="#FFFFFF"/>'
+            f'<path fill="{LINKEDIN_BLUE}" fill-rule="evenodd" d="{LINKEDIN_PATH}"/></svg>')
 
 
 def page(title, body, prefix="", head=""):
@@ -452,6 +463,9 @@ def page(title, body, prefix="", head=""):
 <link rel="icon" href="{ICON_SVG}">
 <link rel="icon" type="image/png" sizes="512x512" href="{prefix}{ICON_PNG}">
 <link rel="apple-touch-icon" href="{prefix}{ICON_PNG}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>{STYLE}</style>{head}
 </head>
 <body>
