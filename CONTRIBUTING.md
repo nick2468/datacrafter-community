@@ -3,6 +3,9 @@
 Thank you for helping. This file says how to report a bug, propose an idea or a concept,
 and submit a showcase entry. It also states the rules every contribution follows.
 
+**New to GitHub?** [Your first contribution, step by step](https://www.datacrafter.net/contribute.html) says what to click, in
+order, with no GitHub knowledge needed.
+
 ## Welcome, and credited
 
 DataCrafter is built by AI from specifications written by people and AI together. This
@@ -10,8 +13,8 @@ repository is where bug reports, enhancement ideas, concepts, specification chan
 showcase entries arrive, and they are credited.
 
 Every change to DataCrafter starts from a written specification, and an AI agent builds
-from that. A bug report written to the template is most of what that agent needs already.
-That is why the templates ask for what they ask for.
+from that. A bug report written to the form is most of what that agent needs already.
+That is why the forms ask for what they ask for.
 
 The product source is not public yet, so this repository holds no product code and there
 is nowhere to send a patch today. If the source is opened later, code contributions will
@@ -20,7 +23,8 @@ be welcome too.
 ## Becoming a Data Crafter
 
 You are a Data Crafter when the founder receives your first contribution: a showcase
-entry, a bug report, or an enhancement idea.
+entry, a bug report, or an enhancement idea. A showcase entry or a concept posted in
+Discussions counts too (see below).
 
 On your first contribution the founder adds your row to [MEMBERS.md](MEMBERS.md). You do
 not edit it yourself. Membership comes first. Triage comes later, and a contribution does
@@ -31,8 +35,8 @@ If you want your LinkedIn profile linked from your row, say so in your first con
 
 ## Report a bug
 
-1. Open a new Issue and choose the **Bug report** template.
-2. Fill in every section: the DataCrafter version, the steps, what you expected, what
+1. Open a new Issue and choose the **Bug report** form.
+2. Fill in every box: the DataCrafter version, the steps, what you expected, what
    happened, and a screenshot.
 3. If the bug shows sensitive data, reproduce it on the Demo instance or with made-up data
    first. The content rules below apply to screenshots in Issues too.
@@ -42,7 +46,7 @@ release notes credit you.
 
 ## Suggest an enhancement
 
-1. Open a new Issue and choose the **Enhancement idea** template.
+1. Open a new Issue and choose the **Enhancement idea** form.
 2. Describe the problem before the proposal. A clear problem is worth more than a
    detailed solution.
 3. Say where you think it fits in the product.
@@ -51,6 +55,14 @@ The founder triages it and rules where it fits. It may become a specification ru
 roadmap item, credited to you.
 
 ## Propose a concept or a specification change
+
+There are two ways. Both count as a contribution, and both are credited to you.
+
+**The easy way: a post in Discussions.** Start a new Discussion in the **Ideas** category.
+A form asks for the problem and your idea. Plain words are fine. The founder may turn your
+post into a concept file in `concepts/`, credited to you.
+
+**The pull request way**, if you are comfortable with GitHub:
 
 1. Write one Markdown file. Name it after the idea, for example
    `concepts/scheduled-email-delivery.md`.
@@ -62,6 +74,15 @@ The founder reviews it by comment. **A merge means "accepted into the backlog". 
 promise to consider the concept, not a promise to build it.**
 
 ## Submit a showcase entry
+
+There are two ways. Both count as a contribution, and both are credited to you.
+
+**The easy way: a post in Discussions.** Start a new Discussion in the **Show and tell**
+category. A form asks what you built, the DataCrafter version, and your screenshots or
+clips. The content rules and media limits below still apply. The founder turns your post
+into a showcase entry, credited to you.
+
+**The pull request way**, if you are comfortable with GitHub:
 
 1. Make a folder under `showcase/entries/` named
    `<next number>-<your GitHub handle>-<short-title>`, for example

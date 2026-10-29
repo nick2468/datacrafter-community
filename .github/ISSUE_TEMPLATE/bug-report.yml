@@ -1,0 +1,57 @@
+name: Bug report
+description: Something in DataCrafter does not work as it should
+title: "Bug: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        By submitting this Issue you give DataCrafter Software Labs the contribution licence in [CONTRIBUTING.md](https://github.com/nick2468/datacrafter-community/blob/main/CONTRIBUTING.md#contribution-licence). You keep your copyright.
+
+        Thank you. A report written to this form is most of what an AI agent needs to fix the bug, so please fill in every section.
+
+        Screenshots follow the content rules in [CONTRIBUTING.md](https://github.com/nick2468/datacrafter-community/blob/main/CONTRIBUTING.md#content-rules-for-screenshots-and-clips): the Demo instance or made-up data only, and no keys, tokens, URLs with credentials or internal hostnames.
+
+        Security problems never go in an Issue. See [SECURITY.md](https://github.com/nick2468/datacrafter-community/blob/main/SECURITY.md).
+  - type: input
+    id: version
+    attributes:
+      label: DataCrafter version
+      description: For example 0.88.0. The desktop client shows it in Help > About, and the web client in the account menu.
+    validations:
+      required: true
+  - type: input
+    id: where
+    attributes:
+      label: Where
+      description: Desktop client, web client, Excel add-in, or the server. Add your operating system and browser if they matter.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      value: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: What actually happened
+      description: Include the exact error message, if there was one.
+    validations:
+      required: true
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: Screenshot
+      description: Drag an image here.

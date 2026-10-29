@@ -1,0 +1,35 @@
+body:
+  - type: markdown
+    attributes:
+      value: |
+        By submitting this Discussion you give DataCrafter Software Labs the contribution licence in [CONTRIBUTING.md](https://github.com/nick2468/datacrafter-community/blob/main/CONTRIBUTING.md#contribution-licence). You keep your copyright.
+
+        Show what you built with DataCrafter. The founder turns your post into a showcase entry, credited to you, and it counts as your first contribution.
+
+        Pictures follow the content rules in [CONTRIBUTING.md](https://github.com/nick2468/datacrafter-community/blob/main/CONTRIBUTING.md#content-rules-for-screenshots-and-clips): the Demo instance or made-up data only, fake names, and no keys, tokens, passwords, URLs with credentials or internal hostnames.
+  - type: textarea
+    id: what
+    attributes:
+      label: What you built
+      description: One paragraph on what the build does and why.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: DataCrafter version
+      description: The version the pictures show, for example 0.88.0.
+    validations:
+      required: true
+  - type: textarea
+    id: media
+    attributes:
+      label: Screenshots or clips
+      description: Drag up to eight files here. PNG, JPG or MP4, at most 10 MB each, and images at least 1200 pixels wide. Add a line under each one saying what it shows.
+    validations:
+      required: true
+  - type: input
+    id: name
+    attributes:
+      label: Your name as you want it shown
+      description: Leave it empty to be credited by your GitHub username.

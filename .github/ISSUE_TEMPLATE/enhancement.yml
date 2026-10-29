@@ -1,0 +1,37 @@
+name: Enhancement idea
+description: Suggest something DataCrafter should do, starting with the problem
+title: "Idea: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        By submitting this Issue you give DataCrafter Software Labs the contribution licence in [CONTRIBUTING.md](https://github.com/nick2468/datacrafter-community/blob/main/CONTRIBUTING.md#contribution-licence). You keep your copyright.
+
+        Thank you. Please describe the problem before the proposal. A clear problem is worth more than a detailed solution, because the founder and the AI agents can often find a better fit for it once they understand it.
+
+        A larger idea, or a change to a specification, can go to Ideas in Discussions, or to concepts/ as a pull request, instead. See [CONTRIBUTING.md](https://github.com/nick2468/datacrafter-community/blob/main/CONTRIBUTING.md#propose-a-concept-or-a-specification-change).
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: What are you trying to do, and what gets in the way today?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: The proposed behaviour
+      description: What should DataCrafter do instead?
+    validations:
+      required: true
+  - type: input
+    id: fit
+    attributes:
+      label: Where it fits
+      description: "Which part of the product: an editor, the Scheduler, Workflows, the web client, the Excel add-in, something new?"
+  - type: input
+    id: version
+    attributes:
+      label: DataCrafter version
+      description: The version you were using when the idea came up, for example 0.88.0.

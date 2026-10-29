@@ -1,0 +1,33 @@
+body:
+  - type: markdown
+    attributes:
+      value: |
+        By submitting this Discussion you give DataCrafter Software Labs the contribution licence in [CONTRIBUTING.md](https://github.com/nick2468/datacrafter-community/blob/main/CONTRIBUTING.md#contribution-licence). You keep your copyright.
+
+        Share an idea or a concept for DataCrafter. Plain words are fine. The founder may turn your post into a concept file in concepts/, credited to you, and it counts as your first contribution.
+
+        Please describe the problem before the idea. A clear problem is worth more than a detailed solution.
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: What are you trying to do, and what gets in the way today?
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: The idea
+      description: What should DataCrafter do? Write as much or as little as you like.
+    validations:
+      required: true
+  - type: input
+    id: fit
+    attributes:
+      label: Where it fits
+      description: "Which part of the product: an editor, the Scheduler, Workflows, the web client, the Excel add-in, something new?"
+  - type: input
+    id: version
+    attributes:
+      label: DataCrafter version
+      description: The version you were using when the idea came up, if you know it.

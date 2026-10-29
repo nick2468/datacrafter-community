@@ -6,6 +6,9 @@ ledger and the small script that builds the DataCrafter showcase site.
 
 It holds no product code.
 
+**New to GitHub?** [Your first contribution, step by step](https://www.datacrafter.net/contribute.html) says what to click, in
+order, with no GitHub knowledge needed.
+
 ## How a contribution becomes a change
 
 DataCrafter is built by AI from specifications written by people and AI together. People
@@ -32,7 +35,7 @@ fix.
 entry, a bug report, or an enhancement idea.**
 
 Receipt is enough. Your contribution does not have to be judged good, or built, for you
-to be a member. "Received" means it arrived here in the shape its template asks for. A
+to be a member. "Received" means it arrived here in the shape its form asks for. A
 blank or off-topic issue is closed and does not count. The founder adds your row to
 [MEMBERS.md](MEMBERS.md), so you never edit the ledger yourself.
 
@@ -40,10 +43,10 @@ blank or off-topic issue is closed and does not count. The founder adds your row
 
 | You want to | Go to |
 |---|---|
-| Report a bug | A new Issue, from the "Bug report" template |
-| Suggest an enhancement | A new Issue, from the "Enhancement idea" template |
-| Propose a concept or a spec change | A pull request that adds one `.md` file to [concepts/](concepts/) |
-| Show something you built | A pull request that adds one folder under [showcase/entries/](showcase/entries/) |
+| Report a bug | A new Issue, from the "Bug report" form |
+| Suggest an enhancement | A new Issue, from the "Enhancement idea" form |
+| Propose a concept or a spec change | A post in Discussions, under Ideas. Or a pull request that adds one `.md` file to [concepts/](concepts/) |
+| Show something you built | A post in Discussions, under Show and tell. Or a pull request that adds one folder under [showcase/entries/](showcase/entries/) |
 | Ask a question | Discussions |
 | Report a security problem | Private vulnerability reporting. See [SECURITY.md](SECURITY.md). Never an Issue |
 
@@ -59,7 +62,8 @@ CONTRIBUTING.md                 how to report, propose and submit; the rules
 MEMBERS.md                      the ledger: one row per Data Crafter
 SECURITY.md                     where security reports go
 LICENSE                         the contribution licence for words and pictures; MIT for site/build.py
-.github/ISSUE_TEMPLATE/         bug report and enhancement idea templates
+.github/ISSUE_TEMPLATE/         the bug report and enhancement idea forms
+.github/DISCUSSION_TEMPLATE/    the Show and tell and Ideas forms
 .github/PULL_REQUEST_TEMPLATE.md
 concepts/                       concept documents, one .md each
 showcase/README.md              how the site shows showcases; the front matter fields
