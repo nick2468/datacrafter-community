@@ -5,7 +5,8 @@ public, and a public report puts every DataCrafter user at risk until a fix ship
 
 ## How to report
 
-1. Open the **Security** tab of this repository.
+1. Open the **Security and quality** tab of this repository. Some screens call
+   it **Security**.
 2. Choose **Report a vulnerability**.
 3. Describe the problem: the DataCrafter version, what an attacker can do, and the steps
    to show it.
